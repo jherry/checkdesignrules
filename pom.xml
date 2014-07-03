@@ -27,8 +27,9 @@
 	</developers>
 
 	<scm>
+		<developerConnection>scm:git:ssh://git@github.com/jherry/checkdesignrules.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com/jherry/checkdesignrules.git</connection>
 		<url>https://github.com/jherry/checkdesignrules</url>
-		<connection>https://github.com/jherry/checkdesignrules.git</connection>
 	</scm>
 
 	<build>
