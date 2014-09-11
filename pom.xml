@@ -6,7 +6,7 @@
 	<artifactId>checkdesignrules</artifactId>
 	<packaging>jar</packaging>
 	<name>Check design rules</name>
-	<version>0.1</version>
+	<version>0.1-SNAPSHOT</version>
 	<description>Provides annotations that help you to enforce your design pattern rules by throwing errors at compilation time if needed.</description>
 	<url>https://github.com/jherry/checkdesignrules</url>
 
