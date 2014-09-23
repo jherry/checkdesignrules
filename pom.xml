@@ -42,7 +42,7 @@
 				a test -->
 			<testResource>
 				<directory>${project.build.testSourceDirectory}/org/cdr/tests</directory>
-				<targetPath>/org/cdr/tests</targetPath>
+				<targetPath>./org/cdr/tests</targetPath>
 			</testResource>
 		</testResources>
 
