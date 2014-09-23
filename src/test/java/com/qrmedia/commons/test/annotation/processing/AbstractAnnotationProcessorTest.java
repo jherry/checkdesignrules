@@ -28,7 +28,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.processing.Processor;
 import javax.tools.Diagnostic;
@@ -55,6 +58,42 @@ public abstract class AbstractAnnotationProcessorTest {
     private static final String SOURCE_FILE_SUFFIX = ".java";
     private static final JavaCompiler COMPILER = ToolProvider.getSystemJavaCompiler();
 
+    static public class DiagnosticComparator implements Comparator<Diagnostic<?>> {
+
+		@Override
+		public int compare(Diagnostic<?> o1, Diagnostic<?> o2) {
+			if (o1 == null && o2 == null) {
+				return 0;
+			}
+			else if (o1 == null && o2 != null) {
+				return 1;
+			}
+			else if (o1 != null && o2 == null) {
+				return -1;
+			}
+			else if (o1.getSource() != null && o2.getSource() != null && !o1.getSource().equals(o2.getSource())) {
+				return o1.getSource().toString().compareTo(o2.getSource().toString()); 
+			}
+			else if (o1.getPosition() != o2.getPosition()) {
+				return (int) (o1.getPosition() - o2.getPosition()); 
+			}
+			else if (o1.getLineNumber() != o2.getLineNumber()) {
+				return (int) (o1.getLineNumber() - o2.getLineNumber()); 
+			}
+			else if (o1.getColumnNumber() != o2.getColumnNumber()) {
+				return (int) (o1.getColumnNumber() - o2.getColumnNumber()); 
+			}
+			else if (o1.getMessage(Locale.ENGLISH) != null && o2.getMessage(Locale.ENGLISH) != null && !o1.getMessage(Locale.ENGLISH).equals(o2.getMessage(Locale.ENGLISH))) {
+				return o1.getMessage(Locale.ENGLISH).compareTo(o2.getMessage(Locale.ENGLISH)); 
+			}
+			else if (o1.getKind() != null && o2.getKind() != null && o1.getKind() != o2.getKind()) {
+				return (int) (o1.getKind().ordinal() - o2.getKind().ordinal()); 
+			}
+			return 0;
+		}
+    	
+    }
+    
     /**
      * @return the processor instances that should be tested
      */
@@ -144,7 +183,9 @@ public abstract class AbstractAnnotationProcessorTest {
             fileManager.close();
         } catch (IOException exception) {}
 
-        return diagnosticCollector.getDiagnostics();
+        List<Diagnostic<? extends JavaFileObject>> diags = new ArrayList<Diagnostic<? extends JavaFileObject>>(diagnosticCollector.getDiagnostics());
+        Collections.sort(diags, new DiagnosticComparator());
+        return diags;
     }
 
     private static Collection<File> findClasspathFiles(String[] filenames) throws IOException {
