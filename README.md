@@ -3,8 +3,26 @@ Check Design Rules
 
 Provides annotations that help you to enforce your design pattern rules by throwing errors at compilation time if needed.
 
+<h3>Install</h3>
+<p>Add dependency to maven pom.xml</p>
+<pre>
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.checkdesignrules&lt;/groupId&gt;
+    &lt;artifactId&gt;checkdesignrules&lt;/artifactId&gt;
+    &lt;version&gt;0.1-SNAPSHOT&lt;/version&gt;
+    &lt;scope&gt;compile&lt;/scope&gt;
+  &lt;/dependency&gt;
+</pre>
+
 <h3>CheckDependencies</h3>
 <p>Package annotation that permit you to deny some dependencies to some other packages.</p>
+<p>To use it, create or modify a file named package-info.java</p>
+<pre>
+@CheckDependencies(deny = "com.model.*")
+package com.view.controller;
+
+import org.cdr.CheckDependencies;
+</pre>
 
 <h3>SerializableClasses</h3>
 <p>Package annotation that requires every class of the package to implements Serializable.</p>
