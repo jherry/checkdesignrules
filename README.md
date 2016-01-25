@@ -13,6 +13,7 @@ Provides annotations that help you to enforce your design pattern rules by throw
     &lt;scope&gt;compile&lt;/scope&gt;
   &lt;/dependency&gt;
 </pre>
+<p>If it does not seems to work (no error when there should have) check that you do not have the compiler option <strong>-proc:none</strong></p>
 
 <h3>CheckDependencies</h3>
 <p>Package annotation that permit you to deny some dependencies to some other packages.</p>
